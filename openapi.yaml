@@ -1,0 +1,230 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://i-wine.local'
+    description: корневой адрес сервера
+    variables: {}
+info:
+  description: Здесь будет приведено описание API сервиса
+  version: 1.0.0
+  title: iWine API
+  termsOfService: ''
+  contact:
+    email: borzilova@documentat.io
+    name: Yuliya
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags: []
+paths:
+  /volume:
+    get:
+      summary: Определить объем вина в графине
+      description: Отображает текущий объем вина в графине
+      parameters: []
+      operationId: getWineVolume
+      responses:
+        '200':
+          description: successful response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: device not found
+          content:
+            application/json:
+              schema: {}
+      security:
+        - Authorization: []
+  /alcohol:
+    get:
+      summary: Определить крепость вина в графине
+      description: >-
+        Отображает крепость вина в графине в интервале от минимального до
+        максимального значения
+      parameters:
+        - name: duration
+          in: query
+          required: true
+          schema:
+            type: string
+            default: '5'
+          description: Продолжительность взбалтывания вина в секундах
+          minLength: '2'
+          maxLength: '10'
+      operationId: getWineStrength
+      responses:
+        '200':
+          description: successful response
+          content:
+            application/json:
+              schema: {}
+        '201':
+          description: Description
+          content:
+            application/json:
+              schema: {}
+      security:
+        - Authorization: []
+    put:
+      summary: Взболтать вино в графине
+      description: Взболтать вино для насыщения его воздухом
+      parameters:
+        - name: duration
+          in: query
+          required: true
+          schema:
+            type: string
+            default: '5'
+          description: Продолжительность взбалтывания вина в секундах
+          minLength: '2'
+          maxLength: '10'
+      operationId: setWineShakeUp
+      responses:
+        '200':
+          description: successful response
+          content:
+            application/json:
+              schema: {}
+        '201':
+          description: Description
+          content:
+            application/json:
+              schema: {}
+  /sugar:
+    get:
+      summary: Определить содержание сахара в вине
+      description: >-
+        Отображает содержание сахара в вине в интервале от минимального до
+        максимального значения
+      parameters: []
+      operationId: getWineSugar
+      responses:
+        '200':
+          description: successful response
+          content:
+            application/json:
+              schema: {}
+        '201':
+          description: Description
+          content:
+            application/json:
+              schema: {}
+      security:
+        - Authorization: []
+  /temperature:
+    get:
+      summary: Определить текущую температуру вина
+      description: >-
+        Определяет текущую температуру вина в интервале от минимального до
+        максимального значения
+      parameters:
+        - name: temp
+          in: query
+          required: true
+          schema:
+            type: string
+            default: '8'
+          description: >-
+            Задаваемая температура в градусах Цельсия; только положительное
+            число
+          minLength: '5'
+          maxLength: '20'
+      operationId: getWineTemperature
+      responses:
+        '200':
+          description: successful response
+          content:
+            application/json:
+              schema: {}
+        '201':
+          description: Description
+          content:
+            application/json:
+              schema: {}
+      security:
+        - Authorization: []
+    put:
+      summary: Задать температуру вина
+      description: Охлаждает или нагревает вино до заданной температуры
+      parameters:
+        - name: temp
+          in: query
+          required: true
+          schema:
+            type: string
+            default: '8'
+          description: >-
+            Задаваемая температура в градусах Цельсия; только положительное
+            число
+          minLength: '5'
+          maxLength: '20'
+      operationId: setWineTemperature
+      responses:
+        '200':
+          description: successful response
+          content:
+            application/json:
+              schema: {}
+        '201':
+          description: Description
+          content:
+            application/json:
+              schema: {}
+  /type:
+    get:
+      summary: Определить тип вина
+      description: Определяет тип вина (с коэффициентом достоверности)
+      parameters: []
+      operationId: getWineType
+      responses:
+        '200':
+          description: successful response
+          content:
+            application/json:
+              schema: {}
+        '201':
+          description: Description
+          content:
+            application/json:
+              schema: {}
+      security:
+        - Authorization: []
+externalDocs:
+  description: See AsyncAPI example
+  url: 'https://mermade.github.io/shins/asyncapi.html'
+components:
+  schemas:
+    Volume:
+      type: object
+      auth:
+        Authorization: Bearer
+  requestBodies:
+    Pet:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Pet'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Pet'
+      description: Pet object that needs to be added to the store
+      required: true
+    UserArray:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+      description: List of user object
+      required: true
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+  links: {}
+  callbacks: {}
+security:
+  - Authorization: []
+  - Bearer: []
